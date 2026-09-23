@@ -1,0 +1,58 @@
+/* Dimensionnement strict A4 (1 Page) */
+.a4-page {
+    width: 210mm;
+    height: 297mm;
+    max-width: 210mm;
+    max-height: 297mm;
+    padding: 18mm 20mm 18mm 22mm;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    position: relative;
+    margin: 0 auto;
+    overflow: hidden; /* Empêche strictement le débordement sur une 2e page */
+    background-color: #ffffff;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Thèmes de couleur de papier */
+.paper-white { background-color: #ffffff; }
+.paper-ivory { background-color: #fdfbf7; }
+.paper-recycled { background-color: #f8fafc; }
+
+/* Styles de polices du corps */
+.font-body-garamond { font-family: 'EB Garamond', Georgia, serif; }
+.font-body-merriweather { font-family: 'Merriweather', serif; }
+.font-body-lora { font-family: 'Lora', serif; }
+.font-body-sans { font-family: 'Inter', sans-serif; }
+.font-body-caveat { font-family: 'Caveat', cursive; font-size: 1.15em; }
+
+/* Styles Cursifs pour Signatures */
+.font-sig-dancing { font-family: 'Dancing Script', cursive; }
+.font-sig-caveat { font-family: 'Caveat', cursive; }
+.font-sig-greatvibes { font-family: 'Great Vibes', cursive; }
+.font-sig-sacramento { font-family: 'Sacramento', cursive; }
+
+/* Ajustement d'impression strict sur 1 page A4 */
+@media print {
+    @page {
+        size: A4 portrait;
+        margin: 0;
+    }
+    body {
+        background: white !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    .no-print {
+        display: none !important;
+    }
+    .a4-page {
+        box-shadow: none !important;
+        margin: 0 !important;
+        width: 210mm !important;
+        height: 297mm !important;
+        max-height: 297mm !important;
+        page-break-after: avoid !important;
+        page-break-before: avoid !important;
+    }
+}
