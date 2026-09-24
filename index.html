@@ -74,30 +74,7 @@
         .font-sig-greatvibes { font-family: 'Great Vibes', cursive; }
         .font-sig-sacramento { font-family: 'Sacramento', cursive; }
 
-        /* ── Responsive mobile / tablette ── */
-
-        /* Wrapper qui reçoit le transform scale */
-        #a4-scale-wrapper {
-            transform-origin: top center;
-            display: block;
-        }
-
-        /* Container : prend la hauteur calculée après scale */
-        #a4-outer-container {
-            display: flex;
-            justify-content: center;
-            overflow: visible;
-        }
-
-        /* Sur tablette et mobile : scale automatique via JS */
-        @media (max-width: 1023px) {
-            /* Le panel preview n'a plus besoin de overflow-x-auto */
-            #panel-preview {
-                overflow: visible;
-            }
-        }
-
-        /* ── Ajustement d'impression strict sur 1 page A4 ── */
+        /* Ajustement d'impression strict sur 1 page A4 */
         @media print {
             @page {
                 size: A4 portrait;
@@ -133,26 +110,26 @@
                 </div>
                 <div>
                     <h1 class="text-base sm:text-lg font-bold leading-tight flex items-center gap-2">
-                        <span>Docs Lettres</span>
-                        <!--<span class="text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 px-2 py-0.5 rounded-full font-semibold">1 Page Strict</span>-->
+                        <span>Générateur de Lettres</span>
+                        <span class="text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 px-2 py-0.5 rounded-full font-semibold">1 Page Strict</span>
                     </h1>
                     <p class="text-xs text-slate-400 hidden sm:block">Format A4 garanti - Administrative, Académique & Amicale</p>
                 </div>
             </div>
 
             <!-- Boutons d'exportation -->
-            <div class="flex items-center space-x-1.5 sm:space-x-2">
-                <button onclick="downloadPDF()" class="inline-flex items-center justify-center px-2.5 sm:px-3.5 py-2 border border-transparent text-xs sm:text-sm font-semibold rounded-lg shadow-sm text-white bg-emerald-600 hover:bg-emerald-700 active:scale-95 transition-all">
-                    <i class="fa-solid fa-file-pdf text-base sm:mr-1.5"></i>
-                    <span class="hidden sm:inline">PDF</span>
+            <div class="flex items-center space-x-2 sm:space-x-3">
+                <button onclick="downloadPDF()" class="inline-flex items-center px-3.5 py-2 border border-transparent text-xs sm:text-sm font-semibold rounded-lg shadow-sm text-white bg-emerald-600 hover:bg-emerald-700 active:scale-95 transition-all">
+                    <i class="fa-solid fa-file-pdf mr-1.5 text-base"></i>
+                    <span>PDF (1 Page)</span>
                 </button>
-                <button onclick="downloadPNG()" class="inline-flex items-center justify-center px-2.5 sm:px-3.5 py-2 border border-transparent text-xs sm:text-sm font-semibold rounded-lg shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 active:scale-95 transition-all">
-                    <i class="fa-solid fa-file-image text-base sm:mr-1.5"></i>
-                    <span class="hidden sm:inline">PNG</span>
+                <button onclick="downloadPNG()" class="inline-flex items-center px-3.5 py-2 border border-transparent text-xs sm:text-sm font-semibold rounded-lg shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 active:scale-95 transition-all">
+                    <i class="fa-solid fa-file-image mr-1.5 text-base"></i>
+                    <span class="hidden md:inline">Télécharger</span> PNG
                 </button>
-                <button onclick="window.print()" class="inline-flex items-center justify-center px-2.5 sm:px-3 py-2 border border-slate-700 text-xs sm:text-sm font-medium rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all">
-                    <i class="fa-solid fa-print sm:mr-1.5"></i>
-                    <span class="hidden sm:inline">Imprimer</span>
+                <button onclick="window.print()" class="inline-flex items-center px-3 py-2 border border-slate-700 text-xs sm:text-sm font-medium rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all">
+                    <i class="fa-solid fa-print mr-1.5"></i>
+                    Imprimer
                 </button>
             </div>
         </div>
@@ -174,7 +151,7 @@
         <span id="toast-message" class="text-sm font-medium">Message de notification</span>
     </div>
 
-    <main class="flex-1 max-w-7xl w-full mx-auto p-3 sm:p-6 lg:p-8 grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-8 items-start">
+    <main class="flex-1 max-w-7xl w-full mx-auto p-3 sm:p-6 lg:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
         <div id="panel-editor" class="lg:col-span-5 space-y-5 no-print">
             
@@ -472,8 +449,7 @@
             </div>
 
             <!-- CONTENEUR A4 ENCAPSULÉ -->
-            <div id="a4-outer-container">
-                <div id="a4-scale-wrapper">
+            <div class="flex justify-center items-start">
                 <div id="letter-paper" class="a4-page paper-white font-body-garamond text-slate-900 leading-relaxed flex flex-col justify-between select-text">
                     
                     <!-- CONTENU HAUT & CORPS -->
@@ -556,8 +532,7 @@
                     </div>
 
                 </div>
-                </div><!-- /a4-scale-wrapper -->
-            </div><!-- /a4-outer-container -->
+            </div>
 
         </div>
 
@@ -733,9 +708,6 @@
             document.getElementById('doc_date').value = today.toLocaleDateString('fr-FR', options);
             
             loadTemplate('piece_admin');
-
-            // Scale initial pour mobile/tablette
-            scaleA4Preview();
         });
 
         function initCanvas() {
@@ -1105,8 +1077,6 @@
                 preview.classList.remove('hidden', 'lg:block');
                 btnPreview.className = "flex-1 py-3 text-center font-medium text-sm border-b-2 border-indigo-600 text-indigo-600 flex justify-center items-center gap-2";
                 btnEdit.className = "flex-1 py-3 text-center font-medium text-sm border-b-2 border-transparent text-slate-500 flex justify-center items-center gap-2";
-                // Recalculer le scale une fois le panel visible
-                setTimeout(scaleA4Preview, 30);
             }
         }
 
@@ -1153,34 +1123,6 @@
                 showToast('Erreur lors du téléchargement PDF', 'fa-circle-xmark');
             });
         }
-
-        // ── Scaling A4 responsive (mobile / tablette) ──
-        function scaleA4Preview() {
-            const wrapper = document.getElementById('a4-scale-wrapper');
-            const outer   = document.getElementById('a4-outer-container');
-            if (!wrapper || !outer) return;
-
-            // Sur grand écran, aucun scale
-            if (window.innerWidth >= 1024) {
-                wrapper.style.transform = '';
-                outer.style.height = '';
-                return;
-            }
-
-            // Largeur réelle du container parent moins les paddings (p-3 = 12px × 2)
-            const available = outer.parentElement.clientWidth - 24;
-            const A4_PX_W   = 794;  // 210mm ≈ 794px à 96 dpi
-            const A4_PX_H   = 1123; // 297mm ≈ 1123px
-            const scale     = Math.min(1, available / A4_PX_W);
-
-            wrapper.style.transform       = `scale(${scale})`;
-            wrapper.style.transformOrigin = 'top center';
-            // Réserver la hauteur exacte après scale pour que le layout ne collapse pas
-            outer.style.height = Math.round(A4_PX_H * scale) + 'px';
-        }
-
-        // Recalcul à chaque resize
-        window.addEventListener('resize', scaleA4Preview);
 
         function downloadPNG() {
             autoFitOnePage();
